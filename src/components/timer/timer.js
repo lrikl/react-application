@@ -123,8 +123,8 @@ export default () => {
                 {showResults && (
                     <div className="timer-end">
                         <div className="timer-end__title">Відлік завершено! 🎉</div>
-                        <div className="timer-end__img"><img src="../../../static//gif/giphy.gif" alt="gif"/></div>
-                        <audio ref={audioRef} className="end-sound" src="../../../static//audio/alarm.mp3" preload="auto"></audio>
+                        <div className="timer-end__img"><img src="./static//gif/giphy.gif" alt="gif"/></div>
+                        <audio ref={audioRef} className="end-sound" src="./static//audio/alarm.mp3" preload="auto"></audio>
                     </div>
                 )}
             </div>
