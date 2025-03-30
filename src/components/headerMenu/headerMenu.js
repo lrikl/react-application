@@ -67,10 +67,8 @@ export default ({ userName, onChangeName }) => {
                 ))}
             </nav>
 
-            <div className="language-block">
-                <div className={`theme-app ${theme}`}>
-                    <div>Тема: <span className="theme-toggle" onClick={toggleTheme}>{theme}</span></div>
-                </div>
+            <div className="theme-app">
+                <div>Тема: <span className="theme-toggle" onClick={toggleTheme}>{theme}</span></div>
             </div>
         </div>
     );
