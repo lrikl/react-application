@@ -28,6 +28,7 @@ export default () => {
     const [inputHandleValue, setInputHandleValue] = useState("");
     const [textBefore, setTextBefore] = useState("");
     const [isCheckDelete, setIsCheckDelete] = useState(false);
+    const [allChecked, setAllChecked] = useState(false);
     const todoListRef = useRef(null);
 
     function getCurrentTime() {
@@ -114,8 +115,29 @@ export default () => {
         setEditTaskId(null);
     }
 
-    function checkAllTasks() {
-        setTodoTasksArr(prevTasks => prevTasks.filter(task => task.completed = true));
+    async function checkAllTasks() {
+        setAllChecked(!allChecked);
+      
+        setTodoTasksArr((prevTasks) => {
+    
+          const updatedTasks = prevTasks.map((task) => ({
+            ...task,
+            completed: !allChecked, 
+          }));
+      
+          updatedTasks.forEach(async (task) => {
+            try {
+              const todoDoc = doc(db, "TodoChat", task.id);
+              await updateDoc(todoDoc, {
+                completed: task.completed,
+              });
+            } catch (error) {
+              console.error("Error updating document: ", error);
+            }
+          });
+      
+          return updatedTasks;
+        });
     }
 
     async function deleteTasks() {
