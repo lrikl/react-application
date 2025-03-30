@@ -30,6 +30,7 @@ export default () => {
     const [isCheckDelete, setIsCheckDelete] = useState(false);
     const [allChecked, setAllChecked] = useState(false);
     const todoListRef = useRef(null);
+    const lastTasksArrLength = useRef(0);
 
     function getCurrentTime() {
         const now = new Date();
@@ -160,6 +161,11 @@ export default () => {
         setIsCheckDelete(todoTasksArr.some(task => task.completed));
         setAllChecked(todoTasksArr.every(task => task.completed));
 
+        if (todoListRef.current && todoTasksArr.length > lastTasksArrLength.current) {
+            todoListRef.current.scrollTop = todoListRef.current.scrollHeight;
+        }
+        lastTasksArrLength.current = todoTasksArr.length;
+        
     }, [todoTasksArr]);
 
     useEffect(() => {
@@ -177,6 +183,7 @@ export default () => {
                 tasks.push({ ...doc.data(), id: doc.id });
             });
             setTodoTasksArr(tasks);
+            lastTasksArrLength.current = 0;
         });
 
         return () => unsubscribe(); //відписка від оновлення дати при розмонтуванні
