@@ -158,6 +158,8 @@ export default () => {
 
     useEffect(() => {
         setIsCheckDelete(todoTasksArr.some(task => task.completed));
+        setAllChecked(todoTasksArr.every(task => task.completed));
+
     }, [todoTasksArr]);
 
     useEffect(() => {
@@ -166,7 +168,7 @@ export default () => {
         }
     }, [inputValue]); // щоб скролл при введенні задачі був прибитий до низу
 
-     useEffect(() => {
+    useEffect(() => {
         // отримання задач
         const tasks = query(collection(db, "TodoChat"), orderBy("createdAt")); 
         const unsubscribe = onSnapshot(tasks, (querySnapshot) => {
@@ -188,7 +190,7 @@ export default () => {
                 {isCheckDelete && (
                     <div className='select-btn'>
                         <button className="delete-btn" onClick={deleteTasks}>🗑</button>
-                        <button className="check-all" onClick={checkAllTasks}>Виділити усе</button>
+                        <button className="check-all" onClick={checkAllTasks}>{allChecked ? "Зняти виділення" : "Виділити усе"}</button>
                     </div>
                 )}
 
